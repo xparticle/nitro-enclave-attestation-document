@@ -99,7 +99,8 @@ impl AttestationDocument {
                     err
                 )
             })?;
-            let pub_pkey = PKey::from_ec_key(pub_ec_key).unwrap()
+            
+            let pub_pkey = openssl::pkey::PKey::from_ec_key(pub_ec_key).unwrap()
             let result = sig_structure.verify_signature(&pub_pkey)
                 .map_err(|err| {
                     format!("AttestationDocument::authenticate failed to verify signature on sig_structure:{:?}", err)
