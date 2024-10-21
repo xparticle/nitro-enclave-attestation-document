@@ -80,7 +80,7 @@ impl AttestationDocument {
 
         // Step 4. Ensure the attestation document is properly signed
         let authenticated = {
-            let sig_structure = aws_nitro_enclaves_cose::sign::COSESign1::from_bytes(document_data)
+            let sig_structure = aws_nitro_enclaves_cose::sign::CoseSign1::from_bytes(document_data)
                 .map_err(|err| {
                     format!("AttestationDocument::authenticate failed to load document_data as COSESign1 structure:{:?}", err)
                 })?;
