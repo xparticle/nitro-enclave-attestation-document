@@ -92,19 +92,7 @@ impl AttestationDocument {
                 .map_err(|err| {
                     format!("AttestationDocument::authenticate failed to extract public key from certificate:{:?}", err)
                 })?;
-            
-            let pub_ec_key = public_key.ec_key().map_err(|err| {
-                format!(
-                    "AttestationDocument::authenticate failed to get ec_key from public_key:{:?}",
-                    err
-                )
-            })?;
-            
-            let pub_pkey = openssl::pkey::PKey::from_ec_key(&pub_ec_key)
-                .map_err(|err| {
-                    format!("AttestationDocument::authenticate failed to extract Pkey from ec key:{:?}", err)
-                })?;
-            let result = sig_structure.verify_signature(&pub_pkey)
+            let result = sig_structure.verify_signature(&public_key)
                 .map_err(|err| {
                     format!("AttestationDocument::authenticate failed to verify signature on sig_structure:{:?}", err)
                 })?;
